@@ -106,12 +106,12 @@ class RegisterView extends StatelessWidget {
                             keyboardType: TextInputType.text,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Please enter your username';
+                                return 'Please enter your Fullname';
                               }
                               return null;
                             },
                             controller: controller.usernameController,
-                            hintText: 'Username',
+                            hintText: 'Fullname',
                           ),
                           SizedBox(
                             height: 10,

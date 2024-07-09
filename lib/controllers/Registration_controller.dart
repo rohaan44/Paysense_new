@@ -36,7 +36,7 @@ class Register_Controller extends GetxController {
       // Check if the username is already taken
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
-          .where('username', isEqualTo: username)
+          .where('email', isEqualTo: email)
           .get();
 
       if (result.docs.isNotEmpty) {
