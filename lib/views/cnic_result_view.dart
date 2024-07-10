@@ -16,7 +16,7 @@ class ResultScreen extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (BuildContext context) => const BottomBar()));
+                        builder: (BuildContext context) =>  BottomBar()));
               },
               title: text,
               height: 500,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:paysense/utils/colors.dart';
 import 'package:paysense/utils/images.dart';
+import 'package:paysense/viewmodel/login_viewmodel.dart';
 import 'package:paysense/views/acctype_view.dart';
 import 'package:paysense/views/aftercard_view.dart';
 import 'package:paysense/views/custsupport_view.dart';
@@ -12,8 +14,7 @@ import 'package:paysense/views/home_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
-
+   BottomBar({super.key});
   @override
   State<BottomBar> createState() => _BottomBarState();
 }

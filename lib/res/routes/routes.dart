@@ -48,7 +48,7 @@ class AppRoutes {
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.dashView,
-            page: () => const BottomBar(),
+            page: () =>  BottomBar(),
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.qrview,
@@ -72,7 +72,7 @@ class AppRoutes {
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.dashboardView,
-            page: () => const BottomBar(),
+            page: () =>  BottomBar(),
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.bepayAmntView,

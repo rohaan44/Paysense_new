@@ -53,7 +53,7 @@ class BottomModal extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) => const BottomBar()));
+                          builder: (BuildContext context) =>  BottomBar()));
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,

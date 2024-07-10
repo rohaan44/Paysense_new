@@ -223,6 +223,8 @@
 //   }
 // }
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -376,7 +378,9 @@ class LoginView extends StatelessWidget {
                                 print('Login button pressed');
                                 if (_formKey.currentState!.validate()) {
                                   print('Form validated');
+                                   log("Button Pressed");
                                    loginController.login();
+                                   
                                 } else {
                                   print('Form validation failed');
                                 }

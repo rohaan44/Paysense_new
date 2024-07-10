@@ -10,16 +10,26 @@ class UserController extends GetxController {
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  void fetchUserData(String phoneNumber) async {
+  @override
+  void onInit() {
+    // Initial data fetch when controller is initialized
+    fetchUserData(); // You can fetch user data here or in fetchUserData itself
+    super.onInit();
+  }
+
+  Future <void> fetchUserData() async {
     try {
       isLoading.value = true;
       errorMessage.value = '';
-      
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String phoneNumber = prefs.getString('phoneNumber') ?? '';
+
       QuerySnapshot querySnapshot = await firestore
           .collection('users')
           .where('phoneNumber', isEqualTo: phoneNumber)
           .get();
-      
+
       if (querySnapshot.docs.isNotEmpty) {
         userData.value = querySnapshot.docs.first.data() as Map<String, dynamic>;
         log('User data fetched: ${userData.value}');
@@ -35,31 +45,4 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> retrieveUserDataLocally() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String email = prefs.getString('email') ?? '';
-    String username = prefs.getString('username') ?? '';
-    String phoneNumber = prefs.getString('phoneNumber') ?? '';
-    String pin = prefs.getString('pin') ?? '';
-    String formattedNumber = prefs.getString('amount') ?? '';
-
-    // Assign the retrieved data to userData
-    userData.value = {
-      'email': email,
-      'username': username,
-      'phoneNumber': phoneNumber,
-      'pin': pin,
-      'amount': formattedNumber,
-    };
-
-    // Log the retrieved data
-    log('Locally retrieved user data: $userData');
-
-  }
-@override
-  void onInit() {
-    // TODO: implement onInit
-    super.onInit();
-    retrieveUserDataLocally();
-  }
 }

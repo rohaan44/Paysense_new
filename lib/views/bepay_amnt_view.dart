@@ -1,11 +1,7 @@
-import 'dart:developer';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:paysense/controllers/BePay_Controller.dart';
+import 'package:paysense/controllers/UserDataController.dart';
 import 'package:paysense/utils/images.dart';
 import 'package:paysense/viewmodel/bepay_amnt_viemodel.dart';
 import 'package:paysense/views/send_money_view.dart';
@@ -15,25 +11,26 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 
 class BePayAmnt extends StatelessWidget {
   BePayAmnt({super.key});
-final BePayAmnt_Controller bepay = BePayAmnt_Controller();
+// final BePayAmnt_Controller bepay = BePayAmnt_Controller();
+
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final BePayAmntController bePayAmntView = Get.put(BePayAmntController());
+    final UserController userController = Get.put(UserController());
     return SafeArea(
       child: Scaffold(
         body: Stack(children: [
           const Uitemplate(),
           Column(
             children: [
-               Padding(
-              padding:
-                  const EdgeInsets.only(left: 35, top: 38.0, bottom: 30),
+              Padding(
+                padding: const EdgeInsets.only(left: 35, top: 38.0, bottom: 30),
                 child: Row(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        Get.back();
+                       Get.back();
                       },
                       child: Image.asset(
                         DummyImg.chevleft,
@@ -44,16 +41,38 @@ final BePayAmnt_Controller bepay = BePayAmnt_Controller();
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 55),
-                      child: getAmount(), 
-                      // Text(
-                      //   "Current Balance \n \t\t\t\t\t\t\t10,000",
-                      //   style: GoogleFonts.poppins(
-                      //     height: 1.7,
-                      //     fontSize: 18.sp,
-                      //     fontWeight: FontWeight.w500,
-                      //   ),
-                      // ),
-                    ),
+                      child: Obx(
+                        () {
+                          if (userController.isLoading.value) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (userController.errorMessage.isNotEmpty) {
+                            return Center(
+                                child: Text(userController.errorMessage.value));
+                          } else if (userController.userData.isEmpty) {
+                            return Center(child: Text('No data available'));
+                          } else {
+                            var userData = userController.userData.value;
+                            return Text(
+                              "Current Balance \n \t\t\t\t\t\t\tRs " +
+                                  userData['amount'],
+                              style: GoogleFonts.poppins(
+                                height: 1.7,
+                                fontSize: 19.sp,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            );
+                          }
+                        },
+                        // Text(
+                        //   "Current Balance \n \t\t\t\t\t\t\t10,000",
+                        //   style: GoogleFonts.poppins(
+                        //     height: 1.7,
+                        //     fontSize: 18.sp,
+                        //     fontWeight: FontWeight.w500,
+                        //   ),
+                        // ),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -146,9 +165,12 @@ final BePayAmnt_Controller bepay = BePayAmnt_Controller();
                     Obx(
                       () => GestureDetector(
                         onTap: () {
-                          bePayAmntView.isButtonEnabled.value
-                              ? Get.to(()=>const SendMoney())
-                              : null;
+                          if (bePayAmntView.isButtonEnabled.value) {
+                            Get.to(() =>
+                                const SendMoney());
+                          }else{
+                            null;
+                          }
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.35,
@@ -182,29 +204,31 @@ final BePayAmnt_Controller bepay = BePayAmnt_Controller();
       ),
     );
   }
-Widget getAmount() {
-    return StreamBuilder(
-      stream: bepay.getUserAmount(),
-      builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError) {
-          log(snapshot.error.toString());
-          return Text('Error: ${snapshot.error}');
-        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return Text('No data available');
-        } else {
-          var amountData = snapshot.data!.first;
-          return Text(
-            'Current Balance \n \t\t\t\t\t\t\t Rs. ${amountData['amount']}',  // Adjust the key according to your data structure
-            style: GoogleFonts.poppins(
-                           height: 1.7,
-                           fontSize: 18.sp,
-                           fontWeight: FontWeight.w500,
-            ),
-          );
-        }
-      },
-    );
-  }
+
 }
+// Widget getAmount() {
+//     return StreamBuilder(
+//       stream: bepay.getUserAmount(),
+//       builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+//         if (snapshot.connectionState == ConnectionState.waiting) {
+//           return CircularProgressIndicator();
+//         } else if (snapshot.hasError) {
+//           log(snapshot.error.toString());
+//           return Text('Error: ${snapshot.error}');
+//         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+//           return Text('No data available');
+//         } else {
+//           var amountData = snapshot.data!.first;
+//           return Text(
+//             'Current Balance \n \t\t\t\t\t\t\t Rs. ${amountData['amount']}',  // Adjust the key according to your data structure
+//             style: GoogleFonts.poppins(
+//                            height: 1.7,
+//                            fontSize: 18.sp,
+//                            fontWeight: FontWeight.w500,
+//             ),
+//           );
+//         }
+//       },
+//     );
+//   }
+// }
