@@ -90,24 +90,41 @@ class EnterAccNo extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
+             Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 35, vertical: 10),
                 child: SizedBox(
-                  height: 40,
+                  height: 50,
                   child: TextField(
                     controller: enterAccController.textacc,
                     onTap: () => enterAccController.openModal(context),
                     readOnly: true,
                     decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(
-                          color: ColorUtil.bordercolor,
-                          width: 1,
+                        isDense: true,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            width: 1.5,
+                            color:Color(0xff459BFF),
+                          ),
+                          borderRadius: BorderRadius.circular(11),
                         ),
-                      ),
-                    ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                            width: 2,
+                            color: Color(0xff459BFF),
+                          ),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 2, color: Colors.red),
+                          borderRadius: BorderRadius.circular(11),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(width: 2, color: Colors.red),
+                          borderRadius: BorderRadius.circular(11),
+                        )),
                   ),
                 ),
               ),

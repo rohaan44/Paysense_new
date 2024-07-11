@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,10 +10,11 @@ import '../widgets/custom_keypad.dart';
 
 class EnterAccController extends GetxController {
   TextEditingController textacc = TextEditingController();
-  final BePayAmntController bePayAmntView = Get.put(BePayAmntController());
+  final BePayAmntController bePayAmntView = Get.find<BePayAmntController>();
   final LoginController loginController = Get.put(LoginController());
   final RxBool loading = false.obs;
   var verificationMessage = ''.obs;
+  var userData = {}.obs; 
 
   RxString inputText = ''.obs;
   RxBool showError = false.obs;
@@ -56,88 +56,37 @@ class EnterAccController extends GetxController {
     );
   }
 
-Future<Map<String, dynamic>?> verifyPhoneNumber() async {
-  String phoneNumber = textacc.text.trim();
-  try {
-    // Reference to the Firestore collection where user data is stored
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+  Future<Map<String, dynamic>?> verifyPhoneNumber() async {
+    String phoneNumber = textacc.text.trim();
+    try {
+      // Reference to the Firestore collection where user data is stored
+      CollectionReference users = FirebaseFirestore.instance.collection('users');
 
-    // Query to check if the phone number exists
-    QuerySnapshot querySnapshot = await users.where('phoneNumber', isEqualTo: phoneNumber).get();
+      // Query to check if the phone number exists
+      QuerySnapshot querySnapshot = await users.where('phoneNumber', isEqualTo: phoneNumber).get();
 
-    // If the query result is not empty, the phone number exists
-    if (querySnapshot.docs.isNotEmpty) {
-      // Return the first user's data (assuming phoneNumber is unique)
-      return querySnapshot.docs.first.data() as Map<String, dynamic>;
-    } else {
+      // If the query result is not empty, the phone number exists
+      if (querySnapshot.docs.isNotEmpty) {
+        // Return the first user's data (assuming phoneNumber is unique)
+        return querySnapshot.docs.first.data() as Map<String, dynamic>;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      log('Error verifying phone number: $e');
       return null;
     }
-  } catch (e) {
-    log('Error verifying phone number: $e');
-    return null;
   }
-}
 
   void verifyAccountNumber() async {
-  loading.value = true;
-  Map<String, dynamic>? userData = await verifyPhoneNumber();
-  loading.value = false;
-  if (userData != null) {
-    Get.to(() => AfterPayAmntView( userData: userData));
-  } else {
-    Util.snackBar("Error", "Account Number is invalid");
+    loading.value = true;
+    Map<String, dynamic>? data = await verifyPhoneNumber();
+    loading.value = false;
+    if (data != null) {
+      userData.value = data; // Assign the data to userData
+      Get.to(() => AfterPayAmntView(userData: userData));
+    } else {
+      Util.snackBar("Error", "Account Number is invalid");
+    }
   }
 }
-
-}
-//   Future<void> transfermoney() async {
-//     final String sender =
-//         loginController.jsonData['accountInfo']['accountNumber'];
-//     final String reciever = textacc.text;
-//     final String amnt = bePayAmntView.textEdit.text;
-
-//     final String apiUrl =
-//         "http://54.162.54.241:8080/api/user/transfer"; // Replace with your API endpoint URL
-
-//     try {
-//       final response = await http.post(
-//         Uri.parse(apiUrl),
-//         body: jsonEncode({
-//           'sourceAccountNumber': sender,
-//           'destinationAccountNumber': reciever,
-//           'amount': amnt
-//         }),
-//         headers: {'Content-Type': 'application/json'},
-//       );
-
-//       if (response.statusCode == 200) {
-//         // Successful login
-//         // You can parse the response JSON if the API returns user data
-//         final responseData = json.decode(response.body);
-
-//         print(response.body);
-//         print(responseData);
-//         var data = jsonDecode(response.body.toString());
-//         print(data['responseMessage']);
-//         if (data['responseMessage'] == 'Transfer Successful!') {
-//           Util.snackBar("Congratulations", data['responseMessage']);
-//           textacc.clear();
-//           bePayAmntView.textEdit.clear();
-//         } else {
-//           Util.snackBar("Oops", data['responseMessage']);
-//           textacc.clear();
-//           bePayAmntView.textEdit.clear();
-//         }
-//       } else {
-//         Util.snackBar(
-//             "Payment Transfer failed", "Please check your credentials.");
-//         textacc.clear();
-//         bePayAmntView.textEdit.clear();
-//       }
-//     } catch (e) {
-//       Util.snackBar('Error', 'An error occurred. Please try again later.');
-//       textacc.clear();
-//       bePayAmntView.textEdit.clear();
-//     }
-//   }
-// }

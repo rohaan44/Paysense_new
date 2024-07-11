@@ -8,7 +8,7 @@ import 'package:paysense/widgets/ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class AfterPayAmntView extends StatelessWidget {
-  final Map<String, dynamic> userData;
+  final RxMap<dynamic, dynamic> userData;
 
   AfterPayAmntView({Key? key,  required this.userData}) : super(key: key);
   final BePayAmntController bePayAmntController = Get.put(BePayAmntController());

@@ -105,7 +105,7 @@ class AppRoutes {
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.transactionScript,
-            page: () => const TransScriptView(),
+            page: () => TransScriptView(),
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.requestMoneyView,

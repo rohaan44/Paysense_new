@@ -12,6 +12,7 @@ class TransConfirmontroller extends GetxController {
   final TextEditingController fieldThree = TextEditingController();
   final TextEditingController fieldFour = TextEditingController();
   var userData = Get.find<UserController>().userData; 
+
   String? otp;
   RxString inputText = ''.obs;
   RxBool showError = false.obs;
@@ -22,9 +23,10 @@ class TransConfirmontroller extends GetxController {
   }
 
 void VerifyPin(){
-if (textControl.value == userData['pin']) {
+  log(userData['pin']);
+if (textControl.text == userData['pin']) {
 log("Pin is Successfull");
-Get.to(()=>const TransScriptView());  
+Get.to(()=> TransScriptView());  
 }else{
   Get.snackbar("Error", "Pin is incorrect");
 }

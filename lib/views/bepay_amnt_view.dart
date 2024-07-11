@@ -17,7 +17,7 @@ class BePayAmnt extends StatelessWidget {
   Widget build(BuildContext context) {
 final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     final BePayAmntController bePayAmntView = Get.put(BePayAmntController());
-    final UserController userController = Get.put(UserController());
+    final UserController userController = Get.find<UserController>();
     return SafeArea(
       child: Scaffold(
         body: Stack(children: [

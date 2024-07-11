@@ -40,7 +40,6 @@ class BePayAmntController extends GetxController {
   void onInit() {
     super.onInit();
     textEdit.addListener(() {
-      // Enable the button when the text field is not empty
       isButtonEnabled.value = textEdit.text.isNotEmpty;
     });
   }
