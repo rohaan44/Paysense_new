@@ -30,7 +30,7 @@ class TransScriptView extends StatelessWidget {
         children: [
           const Uitemplate(),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 47),
+            padding: const EdgeInsets.only(left: 70.0, top: 47),
             child: Stack(
               children: [
               Image.asset(
