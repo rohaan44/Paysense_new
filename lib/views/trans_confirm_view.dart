@@ -78,7 +78,8 @@ class TransConfirmView extends StatelessWidget {
                     controller: transController.textControl,
                     onCompleted: (v) {
                       if (kDebugMode) {
-                        transController.VerifyPin();
+                        transController.verifyPin();
+
                       }
                     },
                     onChanged: (value) {

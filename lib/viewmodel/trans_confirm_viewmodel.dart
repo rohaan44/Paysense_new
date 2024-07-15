@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:paysense/controllers/UserDataController.dart';
+import 'package:paysense/controllers/transactionController.dart';
 import 'package:paysense/views/transact_script_view.dart';
 
 class TransConfirmontroller extends GetxController {
@@ -12,6 +13,7 @@ class TransConfirmontroller extends GetxController {
   final TextEditingController fieldThree = TextEditingController();
   final TextEditingController fieldFour = TextEditingController();
   var userData = Get.find<UserController>().userData; 
+   final transactionController = Get.put(TransactionController());
 
   String? otp;
   RxString inputText = ''.obs;
@@ -22,15 +24,14 @@ class TransConfirmontroller extends GetxController {
     showError.value = false; // Reset error state
   }
 
-void VerifyPin(){
-  log(userData['pin']);
-if (textControl.text == userData['pin']) {
-log("Pin is Successfull");
-Get.to(()=> TransScriptView());  
-}else{
-  Get.snackbar("Error", "Pin is incorrect");
-}
-
-}
-  
+ void verifyPin() {
+    log(userData['pin']);
+    if (textControl.text == userData['pin']) {
+      log("Pin is Successful"); 
+      transactionController.transaction();
+      Get.to(() => TransScriptView());
+    } else {
+      Get.snackbar("Error", "Pin is incorrect");
+    }
+  }
 }

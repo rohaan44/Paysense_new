@@ -10,7 +10,7 @@ import '../widgets/custom_keypad.dart';
 
 class EnterAccController extends GetxController {
   TextEditingController textacc = TextEditingController();
-  final BePayAmntController bePayAmntView = Get.find<BePayAmntController>();
+  final BePayAmntController bePayAmntView = Get.put(BePayAmntController());
   final LoginController loginController = Get.put(LoginController());
   final RxBool loading = false.obs;
   var verificationMessage = ''.obs;
