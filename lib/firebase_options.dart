@@ -41,48 +41,48 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAS5a4uK0cxIbWhgBFXpZiwnwSN2MXHPC0',
-    appId: '1:488232699086:web:d38d0c8af6b88d70d77c9f',
-    messagingSenderId: '488232699086',
-    projectId: 'paysense-fd25d',
-    authDomain: 'paysense-fd25d.firebaseapp.com',
-    storageBucket: 'paysense-fd25d.appspot.com',
-    measurementId: 'G-38X8BXDTMD',
+    apiKey: 'AIzaSyBZXZfBvx3e6HQ4Ffi-RY1NUe3QpVNjx6A',
+    appId: '1:120954544713:web:7210420549d9a87ab5d598',
+    messagingSenderId: '120954544713',
+    projectId: 'newpaysense-83ef4',
+    authDomain: 'newpaysense-83ef4.firebaseapp.com',
+    storageBucket: 'newpaysense-83ef4.appspot.com',
+    measurementId: 'G-RBBHGTT1FN',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAx18u0iwaq3goCpOtfFtc0KsZCEq72fPs',
-    appId: '1:488232699086:android:d0e326e3bc13e298d77c9f',
-    messagingSenderId: '488232699086',
-    projectId: 'paysense-fd25d',
-    storageBucket: 'paysense-fd25d.appspot.com',
+    apiKey: 'AIzaSyC3llaWkO39ArzsHTlTWgN0HS--IIZJ-tY',
+    appId: '1:120954544713:android:18f4c28b564c38e0b5d598',
+    messagingSenderId: '120954544713',
+    projectId: 'newpaysense-83ef4',
+    storageBucket: 'newpaysense-83ef4.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAZ9CCg1IHtpiSf5Js0jZthEn-oB72hK5Y',
-    appId: '1:488232699086:ios:64228bce8490b898d77c9f',
-    messagingSenderId: '488232699086',
-    projectId: 'paysense-fd25d',
-    storageBucket: 'paysense-fd25d.appspot.com',
+    apiKey: 'AIzaSyBXCLCW2cYqJY975bxP10PZ7gCHo1LEFf0',
+    appId: '1:120954544713:ios:aa75f6ad69e9bccab5d598',
+    messagingSenderId: '120954544713',
+    projectId: 'newpaysense-83ef4',
+    storageBucket: 'newpaysense-83ef4.appspot.com',
     iosBundleId: 'com.example.paysense',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAZ9CCg1IHtpiSf5Js0jZthEn-oB72hK5Y',
-    appId: '1:488232699086:ios:64228bce8490b898d77c9f',
-    messagingSenderId: '488232699086',
-    projectId: 'paysense-fd25d',
-    storageBucket: 'paysense-fd25d.appspot.com',
+    apiKey: 'AIzaSyBXCLCW2cYqJY975bxP10PZ7gCHo1LEFf0',
+    appId: '1:120954544713:ios:aa75f6ad69e9bccab5d598',
+    messagingSenderId: '120954544713',
+    projectId: 'newpaysense-83ef4',
+    storageBucket: 'newpaysense-83ef4.appspot.com',
     iosBundleId: 'com.example.paysense',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyAS5a4uK0cxIbWhgBFXpZiwnwSN2MXHPC0',
-    appId: '1:488232699086:web:4686cc5ef86b6740d77c9f',
-    messagingSenderId: '488232699086',
-    projectId: 'paysense-fd25d',
-    authDomain: 'paysense-fd25d.firebaseapp.com',
-    storageBucket: 'paysense-fd25d.appspot.com',
-    measurementId: 'G-KKJ89BTHLS',
+    apiKey: 'AIzaSyBZXZfBvx3e6HQ4Ffi-RY1NUe3QpVNjx6A',
+    appId: '1:120954544713:web:1229a7595ce8a91cb5d598',
+    messagingSenderId: '120954544713',
+    projectId: 'newpaysense-83ef4',
+    authDomain: 'newpaysense-83ef4.firebaseapp.com',
+    storageBucket: 'newpaysense-83ef4.appspot.com',
+    measurementId: 'G-4ZLM3ZEDM1',
   );
 }
