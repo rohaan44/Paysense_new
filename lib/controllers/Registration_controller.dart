@@ -64,6 +64,7 @@ class Register_Controller extends GetxController {
         'pin': pin,
         'amount': formattedNumber,
       });
+       log('Data saved in Firestore successfully');
 
       // Save user data locally
       await saveUserDataLocally(email, username, phoneNumber, pin, formattedNumber);

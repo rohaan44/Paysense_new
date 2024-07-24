@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:paysense/firebase_options.dart';
 // import 'package:paysense/firebase_options.dart';
 import 'package:paysense/res/routes/routes.dart';
 // import 'package:paysense/views/acctype_view.dart';
@@ -9,9 +10,23 @@ import 'package:paysense/res/routes/routes.dart';
 import 'package:paysense/views/splash_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  
+  // Debug prints to check initialization
+  print('Initializing Firebase...');
+  
+  if (Firebase.apps.isEmpty) {
+    print('No Firebase apps initialized. Initializing now...');
+    await Firebase.initializeApp(
+       options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase initialized.');
+  } else {
+    print('Firebase already initialized.');
+  }
+
   runApp(const MyApp());
 }
 

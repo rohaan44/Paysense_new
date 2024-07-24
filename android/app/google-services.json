@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "120954544713",
-    "project_id": "newpaysense-83ef4",
-    "storage_bucket": "newpaysense-83ef4.appspot.com"
+    "project_number": "976972312564",
+    "project_id": "paysensenew",
+    "storage_bucket": "paysensenew.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:120954544713:android:18f4c28b564c38e0b5d598",
+        "mobilesdk_app_id": "1:976972312564:android:648fe0b99c565d2bb953a1",
         "android_client_info": {
           "package_name": "com.example.paysense"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC3llaWkO39ArzsHTlTWgN0HS--IIZJ-tY"
+          "current_key": "AIzaSyDimjijAiJvx5FKAlC7EO6_kSxIYLPfcxw"
         }
       ],
       "services": {
