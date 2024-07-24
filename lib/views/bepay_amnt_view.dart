@@ -44,7 +44,7 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
                       child: Obx(
                         () {
                           if (userController.isLoading.value) {
-                            return Center(child: CircularProgressIndicator());
+                            return const Center(child: CircularProgressIndicator());
                           } else if (userController.errorMessage.isNotEmpty) {
                             return Center(
                                 child: Text(userController.errorMessage.value));

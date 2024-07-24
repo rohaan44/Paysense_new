@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ class TransactionController extends GetxController {
   final recieverData = Get.find<EnterAccController>().userData;
   final senderData = Get.find<UserController>().userData;
   final sendingAmountController = Get.find<BePayAmntController>().textEdit;
+  var status = false.obs;
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -94,11 +96,16 @@ int? receiverAmount = parseAmount(recieverData['amount']);
         try {
           WriteBatch batch = firestore.batch();
           batch.update(senderRef, {'amount': formattedUpdatedSenderAmount});
+          batch.update(senderRef, {'totalTransaction': FieldValue.increment(1)});
           batch.update(receiverRef, {'amount': formattedUpdatedReceiverAmount});
           await batch.commit();
           senderData['amount'] = formattedUpdatedSenderAmount;
           recieverData['amount'] = formattedUpdatedReceiverAmount;
+
           Get.snackbar('Success', 'Transaction completed successfully');
+          status.value = true;
+         transactionData(senderData['phoneNumber'], recieverData['phoneNumber'], senderData['fullname'], recieverData['fullname'], sendingAmount, status.value);
+
         } catch (e) {
           Get.snackbar('Error', 'Transaction failed: ${e.toString()}');
         }
@@ -109,4 +116,30 @@ int? receiverAmount = parseAmount(recieverData['amount']);
       Get.snackbar('Error', 'Error fetching documents: ${e.toString()}');
     }
   }
+
+Future<void> transactionData(
+    String senderId, 
+    String receiverId, 
+    String senderName, 
+    String receiverName, 
+    int sendingAmount, 
+    bool status
+) async {
+  // Generate a unique document ID using current timestamp
+  String transactionId = 'Paysense${DateTime.now().millisecondsSinceEpoch}';
+  
+  await FirebaseFirestore.instance.collection('transactions').doc(transactionId).set({
+    'SenderId': senderId,
+    'ReceiverId': receiverId,
+    'SenderName': senderName,
+    'ReceiverName': receiverName,
+    'SendingAmount': sendingAmount,
+    'Status': status,
+    'Timestamp': FieldValue.serverTimestamp(), // Storing the server timestamp
+  }).then((value) {
+    log('Data saved in Firestore successfully');
+  });
+}
+
+
 }

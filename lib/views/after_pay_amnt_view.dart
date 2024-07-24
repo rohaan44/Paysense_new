@@ -85,7 +85,7 @@ class AfterPayAmntView extends StatelessWidget {
                           //backgroundImage: NetworkImage(imgg), // Display user image
                         ),
                         title: Text(
-                          userData['username'] ?? "Unknown User", // Display user name
+                          userData['fullName'] ?? "Unknown User", // Display user name
                           style: GoogleFonts.poppins(
                             fontSize: 17.sp,
                             fontWeight: FontWeight.w400,

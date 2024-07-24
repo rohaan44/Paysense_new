@@ -11,7 +11,7 @@ class Register_Controller extends GetxController {
   final RxBool isLoading = false.obs;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
-  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController fullNameController = TextEditingController();
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController pinController = TextEditingController();
   var isHiddenPassword = true.obs;
@@ -22,7 +22,7 @@ class Register_Controller extends GetxController {
     }
 
     final String email = emailController.text.trim();
-    final String username = usernameController.text.trim();
+    final String fullName = fullNameController.text.trim();
     final String phoneNumber = phoneNumberController.text.trim();
     final String pin = pinController.text.trim();
     // Ensure the pin is at least 6 characters long
@@ -33,15 +33,27 @@ class Register_Controller extends GetxController {
     try {
       isLoading.value = true;
 
-      // Check if the username is already taken
+      // Check if the email or phone number is already taken
       final QuerySnapshot result = await FirebaseFirestore.instance
           .collection('users')
           .where('email', isEqualTo: email)
           .get();
+      final QuerySnapshot phoneResult = await FirebaseFirestore.instance
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .get();
 
       if (result.docs.isNotEmpty) {
         Get.snackbar('Error',
-            'The username is already taken. Please choose another one.',
+            'The email is already taken. Please choose another one.',
+            snackPosition: SnackPosition.BOTTOM);
+        isLoading.value = false;
+        return;
+      }
+
+      if (phoneResult.docs.isNotEmpty) {
+        Get.snackbar('Error',
+            'The phone number is already taken. Please choose another one.',
             snackPosition: SnackPosition.BOTTOM);
         isLoading.value = false;
         return;
@@ -59,15 +71,15 @@ class Register_Controller extends GetxController {
           .doc(phoneNumber)
           .set({
         'email': email,
-        'username': username,
+        'fullName': fullName,
         'phoneNumber': phoneNumber,
         'pin': pin,
         'amount': formattedNumber,
       });
-       log('Data saved in Firestore successfully');
+      log('Data saved in Firestore successfully');
 
       // Save user data locally
-      await saveUserDataLocally(email, username, phoneNumber, pin, formattedNumber);
+      await saveUserDataLocally(email, fullName, phoneNumber, pin, formattedNumber);
 
       Get.snackbar(
         'Success',
@@ -90,7 +102,7 @@ class Register_Controller extends GetxController {
     }
   }
 
-  Future<void> saveUserDataLocally(String email, String username,
+  Future<void> saveUserDataLocally(String email, String fullName,
       String phoneNumber, String pin, String formattedNumber) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String existingEmail = prefs.getString('email') ?? '';
@@ -100,7 +112,7 @@ class Register_Controller extends GetxController {
           snackPosition: SnackPosition.BOTTOM);
     } else {
       await prefs.setString('email', email);
-      await prefs.setString('username', username);
+      await prefs.setString('fullName', fullName);
       await prefs.setString('phoneNumber', phoneNumber);
       await prefs.setString('pin', pin);
       await prefs.setString('amount', formattedNumber);
@@ -108,7 +120,7 @@ class Register_Controller extends GetxController {
 
       // Verify saved data
       log('Saved Email: ${prefs.getString('email')}');
-      log('Saved Username: ${prefs.getString('username')}');
+      log('Saved FullName: ${prefs.getString('fullName')}');
       log('Saved PhoneNumber: ${prefs.getString('phoneNumber')}');
       log('Saved Pin: ${prefs.getString('pin')}');
       log('Saved Amount: ${prefs.getString('amount')}');
@@ -118,7 +130,7 @@ class Register_Controller extends GetxController {
   @override
   void onClose() {
     emailController.dispose();
-    usernameController.dispose();
+    fullNameController.dispose();
     phoneNumberController.dispose();
     pinController.dispose();
     super.onClose();

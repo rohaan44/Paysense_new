@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:paysense/viewmodel/accttype_viewmodel.dart';
 import 'package:paysense/utils/images.dart';
 import 'package:paysense/widgets/buttons.dart';
 import 'package:paysense/widgets/ui.dart';

@@ -95,7 +95,7 @@ class TransScriptView extends StatelessWidget {
                                                       height: 1,
                                                       fontWeight:
                                                           FontWeight.w500)),
-                                               Text(userData['username']),
+                                               Text(userData['fullName']),
                                             ],
                                           ),
                                           const Divider(
@@ -131,7 +131,7 @@ class TransScriptView extends StatelessWidget {
                                                       height: 1,
                                                       fontWeight:
                                                           FontWeight.w500)),
-                                               Text(RecieverData.userData['username']),
+                                               Text(RecieverData.userData['fullName']),
                                             ],
                                           ),
                                           const Divider(

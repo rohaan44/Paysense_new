@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -7,7 +6,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:paysense/controllers/Registration_controller.dart';
 import 'package:paysense/utils/colors.dart';
-import 'package:paysense/viewmodel/registration_viewmodel.dart';
 import 'package:paysense/widgets/buttons.dart';
 import 'package:paysense/widgets/customTextField.dart';
 import 'package:paysense/widgets/ui.dart';
@@ -110,7 +108,7 @@ class RegisterView extends StatelessWidget {
                               }
                               return null;
                             },
-                            controller: controller.usernameController,
+                            controller: controller.fullNameController,
                             hintText: 'Fullname',
                           ),
                           SizedBox(
