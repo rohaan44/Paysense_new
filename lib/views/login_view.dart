@@ -247,13 +247,13 @@ class LoginView extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
+        body: Stack(
+          children: [
+            Uitemplate(),
+             Padding(
           padding: const EdgeInsets.all(25.0),
           child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                const Uitemplate(),
+            child: 
                 Column(
                   children: [
                     SizedBox(height: Get.height * 0.09),
@@ -417,11 +417,11 @@ class LoginView extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
+        ))],
             ),
           ),
-        ),
-      ),
-    );
+        
+          );
+      
   }
 }

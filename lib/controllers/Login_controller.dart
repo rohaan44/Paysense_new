@@ -25,17 +25,12 @@ class Login_Controller extends GetxController {
         email: emailController.text.toString(),
         password: adjustedPin,
       );
-
-      // Retrieve the signed-in user's email
       String signedInEmail = userCredential.user?.email ?? '';
 
-      // Retrieve local user data
       await retrieveUserDataLocally(signedInEmail);
 
       isLoading.value = false;
       Util.snackBar("Congratulations", "User Logged In Successfully");
-      
-      // Pass the user data to DashView through the constructor
       Get.to(() => DashView()); 
 
     } catch (error) {

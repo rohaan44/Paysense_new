@@ -1,35 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:http/http.dart';
+import 'package:paysense/controllers/BottomBarController.dart';
 import 'package:paysense/utils/colors.dart';
 import 'package:paysense/utils/images.dart';
-import 'package:paysense/viewmodel/login_viewmodel.dart';
-import 'package:paysense/views/acctype_view.dart';
-import 'package:paysense/views/aftercard_view.dart';
-import 'package:paysense/views/custsupport_view.dart';
-import 'package:paysense/views/dashboard_view.dart';
-import 'package:paysense/views/home_view.dart';
-// import 'package:paysense/views/login_view.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class BottomBar extends StatefulWidget {
-   BottomBar({super.key});
-  @override
-  State<BottomBar> createState() => _BottomBarState();
-}
-
-class _BottomBarState extends State<BottomBar> {
-  int currentTab = 0;
-  final List<Widget> screens = [
-    DashView(),
-    HomeView(),
-    const CardView(),
-    AccType(),
-    const CustomerSupport()
-  ];
-  Widget currentScreen = DashView();
-  final PageStorageBucket bucket = PageStorageBucket();
+class BottomBar extends StatelessWidget {
+  BottomBar({super.key});
+  
+  final BottomBarController controller = Get.put(BottomBarController());
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +19,7 @@ class _BottomBarState extends State<BottomBar> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        body: PageStorage(bucket: bucket, child: currentScreen),
+        body: Obx(() => PageStorage(bucket: PageStorageBucket(), child: controller.currentScreen)),
         floatingActionButton: FloatingActionButton(
           shape: CircleBorder(),
           backgroundColor: Colors.white,
@@ -75,10 +55,7 @@ class _BottomBarState extends State<BottomBar> {
     return MaterialButton(
       minWidth: 40,
       onPressed: () {
-        setState(() {
-          currentScreen = screens[index];
-          currentTab = index;
-        });
+        controller.changeTab(index);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -86,12 +63,12 @@ class _BottomBarState extends State<BottomBar> {
           Image.asset(
             icon,
             width: 6.h,  // Adjusted size
-            color: getTabColor(index, currentTab, isDarkMode, isLightMode),
+            color: getTabColor(index, controller.currentTab.value, isDarkMode, isLightMode),
           ),
           Text(
             label,
             style: GoogleFonts.poppins(
-              color: getTabColor(currentTab, index, isDarkMode, isLightMode),
+              color: getTabColor(controller.currentTab.value, index, isDarkMode, isLightMode),
               fontSize: 15.sp,
               fontWeight: FontWeight.w300,
             ),

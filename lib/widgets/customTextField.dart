@@ -9,6 +9,7 @@ class RoundedTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool? obscureText;
 
+
   const RoundedTextField({
     Key? key,
     this.keyboardType,
@@ -25,17 +26,18 @@ class RoundedTextField extends StatelessWidget {
       obscureText: obscureText!,
       validator: validator,
       keyboardType: keyboardType,
+      cursorColor: Color(0xff459BFF),
       controller: controller ?? TextEditingController(),
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         hintText: hintText,
         hintStyle: GoogleFonts.poppins(
-          color: const Color(0xff979797),
+          color: const Color(0xffCCCDC6),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             width: 1.5,
-            color: Color(0xff979797),
+            color: Color.fromARGB(255, 208, 209, 211),
           ),
           borderRadius: BorderRadius.circular(11),
         ),

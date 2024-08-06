@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:paysense/views/login_view.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:paysense/views/login_view.dart';
 
 class Register_Controller extends GetxController {
   final RxBool isLoading = false.obs;
@@ -33,43 +33,42 @@ class Register_Controller extends GetxController {
     try {
       isLoading.value = true;
 
-      // Check if the email or phone number is already taken
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('users')
-          .where('email', isEqualTo: email)
-          .get();
+      // Check if the email is already registered in Firebase Authentication
+      final List<String> signInMethods = await FirebaseAuth.instance.fetchSignInMethodsForEmail(email);
+      if (signInMethods.isNotEmpty) {
+        Get.snackbar(
+          'Error',
+          'The email is already taken. Please choose another one.',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        isLoading.value = false;
+        return;
+      }
+
+      // Check if the phone number is already taken in Firestore
       final QuerySnapshot phoneResult = await FirebaseFirestore.instance
           .collection('users')
           .where('phoneNumber', isEqualTo: phoneNumber)
           .get();
 
-      if (result.docs.isNotEmpty) {
-        Get.snackbar('Error',
-            'The email is already taken. Please choose another one.',
-            snackPosition: SnackPosition.BOTTOM);
-        isLoading.value = false;
-        return;
-      }
-
       if (phoneResult.docs.isNotEmpty) {
-        Get.snackbar('Error',
-            'The phone number is already taken. Please choose another one.',
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          'Error',
+          'The phone number is already taken. Please choose another one.',
+          snackPosition: SnackPosition.TOP,
+        );
         isLoading.value = false;
         return;
       }
 
       // Create user with email and password
-      UserCredential userCredential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: adjustedPin,
       );
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(phoneNumber)
-          .set({
+      // Save user data in Firestore
+      await FirebaseFirestore.instance.collection('users').doc(phoneNumber).set({
         'email': email,
         'fullName': fullName,
         'phoneNumber': phoneNumber,
@@ -84,32 +83,50 @@ class Register_Controller extends GetxController {
       Get.snackbar(
         'Success',
         'Registration successful',
-        snackPosition: SnackPosition.BOTTOM,
+        snackPosition: SnackPosition.TOP,
       );
       Get.to(LoginView());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        Get.snackbar('Error', 'The password provided is too weak.',
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          'Error',
+          'The password provided is too weak.',
+          snackPosition: SnackPosition.TOP,
+        );
       } else if (e.code == 'email-already-in-use') {
-        Get.snackbar('Error', 'The account already exists for that email.',
-            snackPosition: SnackPosition.BOTTOM);
+        Get.snackbar(
+          'Error',
+          'The account already exists for that email.',
+          snackPosition: SnackPosition.TOP,
+        );
       }
     } catch (e) {
-      Get.snackbar('Error', 'Error: $e', snackPosition: SnackPosition.BOTTOM);
+      log(e.toString());
+      Get.snackbar(
+        'Error',
+        'Error: Something went wrong',
+        snackPosition: SnackPosition.TOP,
+      );
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> saveUserDataLocally(String email, String fullName,
-      String phoneNumber, String pin, String formattedNumber) async {
+  Future<void> saveUserDataLocally(
+    String email,
+    String fullName,
+    String phoneNumber,
+    String pin,
+    String formattedNumber,
+  ) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String existingEmail = prefs.getString('email') ?? '';
     if (existingEmail.isNotEmpty && existingEmail == email) {
       Get.snackbar(
-          'Error', 'User with the same email is already registered locally.',
-          snackPosition: SnackPosition.BOTTOM);
+        'Error',
+        'User with the same email is already registered locally.',
+        snackPosition: SnackPosition.BOTTOM,
+      );
     } else {
       await prefs.setString('email', email);
       await prefs.setString('fullName', fullName);

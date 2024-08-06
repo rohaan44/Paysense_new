@@ -3,30 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:paysense/firebase_options.dart';
-// import 'package:paysense/firebase_options.dart';
 import 'package:paysense/res/routes/routes.dart';
-// import 'package:paysense/views/acctype_view.dart';
-// import 'package:paysense/views/dashboard_view.dart';
-import 'package:paysense/views/splash_view.dart';
+import 'package:paysense/res/routes/routes_name.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   // Debug prints to check initialization
-  print('Initializing Firebase...');
+  debugPrint('Initializing Firebase...');
   
   if (Firebase.apps.isEmpty) {
-    print('No Firebase apps initialized. Initializing now...');
+    debugPrint('No Firebase apps initialized. Initializing now...');
     await Firebase.initializeApp(
        options: DefaultFirebaseOptions.currentPlatform,
     );
-    print('Firebase initialized.');
+    debugPrint('Firebase initialized.');
   } else {
-    print('Firebase already initialized.');
+    debugPrint('Firebase already initialized.');
   }
 
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
+  
+  SystemChrome.setSystemUIOverlayStyle(
+    SystemUiOverlayStyle.light.copyWith(
+      statusBarColor: Colors.transparent,
+      systemNavigationBarColor: Colors.transparent,
+    ),
+  );
+  
   runApp(const MyApp());
 }
 
@@ -35,6 +47,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
     ]);
@@ -44,11 +57,9 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             darkTheme: ThemeData.dark(),
             themeMode: ThemeMode.system,
-            home: //DashView(),
-            //AccType(),
-            const SplashView(),
+            initialRoute: RouteName.splashScreen,
             getPages: AppRoutes.appRoutes()
-            // home: const RequestMoneyView(),
+            
             );
       },
     );

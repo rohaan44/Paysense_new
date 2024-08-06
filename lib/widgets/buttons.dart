@@ -22,6 +22,7 @@ class DummyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      highlightColor: Colors.grey,
       onTap: onPress,
       child: Container(
         height: height,

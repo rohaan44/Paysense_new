@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:paysense/controllers/Login_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:developer';
 
@@ -7,13 +10,14 @@ class UserController extends GetxController {
   var userData = {}.obs;
   var isLoading = true.obs;
   var errorMessage = ''.obs;
+  final Login_Controller controller = Get.find<Login_Controller>();
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   void onInit() {
-    // Initial data fetch when controller is initialized
-    fetchUserData(); // You can fetch user data here or in fetchUserData itself
+    
+    fetchUserData();
     super.onInit();
   }
 
@@ -23,19 +27,19 @@ class UserController extends GetxController {
       errorMessage.value = '';
 
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      String phoneNumber = prefs.getString('phoneNumber') ?? '';
+      String email = prefs.getString('email') ?? '';
 
       QuerySnapshot querySnapshot = await firestore
           .collection('users')
-          .where('phoneNumber', isEqualTo: phoneNumber)
+          .where('email', isEqualTo: controller.emailController.text.toString())
           .get();
 
       if (querySnapshot.docs.isNotEmpty) {
         userData.value = querySnapshot.docs.first.data() as Map<String, dynamic>;
         log('User data fetched: ${userData.value}');
       } else {
-        errorMessage.value = 'No user found for phone number: $phoneNumber';
-        log('No user found for phone number: $phoneNumber');
+        errorMessage.value = 'No user found for phone number: $email';
+        log('No user found for phone number: $email');
       }
     } catch (e) {
       errorMessage.value = 'Failed to fetch user data: $e';

@@ -89,7 +89,8 @@ class HomeView extends StatelessWidget {
                         onPress: () {
                           Get.toNamed('/loginView');
                         }),
-                  )
+                  ),
+                  
                 ],
               ),
             ],

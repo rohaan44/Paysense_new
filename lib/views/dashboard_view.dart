@@ -19,17 +19,16 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
     Future<void> _refreshScreen() async {
       await userController.fetchUserData();
     }
-
     return GetBuilder<UserController>(
       builder: (controller) => SafeArea(
         child: Scaffold(
           body: RefreshIndicator(
             onRefresh: _refreshScreen,
-            child: ListView(
+            child: Stack(
               children: [
-                Stack(
+                const Uitemplate(),
+                ListView(
                   children: [
-                    const Uitemplate(),
                     Column(
                       children: [
                         Padding(
@@ -139,7 +138,7 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
                                 },
                                 child: RoundButton(
                                   iconn: Icons.refresh,
-                                  title: " Load\nMoney",
+                                  title: " Scan\n QR code",
                                 ),
                               ),
                               RoundButton(
