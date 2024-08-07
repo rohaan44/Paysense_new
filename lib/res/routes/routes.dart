@@ -23,7 +23,6 @@ import 'package:paysense/views/trans_confirm_view.dart';
 import 'package:paysense/views/trans_confirm_view_page2.dart';
 import 'package:paysense/views/transact_script_view.dart';
 import 'package:paysense/widgets/bottom_bar.dart';
-
 class AppRoutes {
   static appRoutes() => [
         GetPage(
@@ -52,7 +51,7 @@ class AppRoutes {
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.qrview,
-            page: () => const QRView(),
+            page: () =>  QRView(),
             transition: Transition.leftToRight),
         GetPage(
             name: RouteName.cardview,

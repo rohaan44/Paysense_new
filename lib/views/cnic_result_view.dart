@@ -13,10 +13,10 @@ class ResultScreen extends StatelessWidget {
           child: Stack(children: [
             VerifyView(
               onPress: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (BuildContext context) =>  BottomBar()));
+                // Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (BuildContext context) =>  BottomBar()));
               },
               title: text,
               height: 500,

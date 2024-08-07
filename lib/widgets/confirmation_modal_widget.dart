@@ -50,11 +50,11 @@ class BottomModal extends StatelessWidget {
               padding: const EdgeInsets.only(left: 35, right: 35, top: 20),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) =>  BottomBar()));
-                },
+                //   Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (BuildContext context) =>  BottomBar()));
+                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
                   height: MediaQuery.of(context).size.height * 0.09,

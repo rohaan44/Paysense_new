@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:paysense/res/routes/routes_name.dart';
 import 'package:paysense/utils/images.dart';
 import 'package:paysense/widgets/ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -23,7 +24,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
 
     Timer(const Duration(seconds: 5), () {
-      Get.toNamed("/registerandloginView");
+      Get.offAllNamed(RouteName.homeScreen); // Navigate to LoginView
     });
   }
 

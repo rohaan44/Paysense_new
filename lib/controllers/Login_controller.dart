@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:paysense/res/routes/routes_name.dart';
 import 'package:paysense/utils/util.dart';
 import 'package:paysense/views/dashboard_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +32,7 @@ class Login_Controller extends GetxController {
 
       isLoading.value = false;
       Util.snackBar("Congratulations", "User Logged In Successfully");
-      Get.to(() => DashView()); 
+      Get.offAllNamed(RouteName.dashboardView);
 
     } catch (error) {
       isLoading.value = false;
