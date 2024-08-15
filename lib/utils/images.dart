@@ -29,4 +29,5 @@ class DummyImg {
   static String hbl = "assets/images/hbl.png";
   static String closecircle = "assets/images/closecircle.png";
   static String commute = "assets/images/commute.png";
+
 }

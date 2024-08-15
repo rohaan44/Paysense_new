@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:paysense/firebase_options.dart';
 import 'package:paysense/res/routes/routes.dart';
 import 'package:paysense/views/splash_view.dart';
+import 'package:paysense/views/tester.dart';
 
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -59,7 +60,7 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             themeMode: ThemeMode.system,
             //initialRoute: RouteName.splashScreen,
-            home: SplashView(),
+            home: Tester(),
             getPages: AppRoutes.appRoutes()
             
             );

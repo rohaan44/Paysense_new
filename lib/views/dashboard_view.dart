@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:paysense/controllers/UserDataController.dart';
 import 'package:paysense/utils/images.dart';
+import 'package:paysense/widgets/CustomCard.dart';
 import 'package:paysense/widgets/round_button.dart';
 import 'package:paysense/widgets/tabbar.dart';
 import 'package:paysense/widgets/ui.dart';
@@ -65,6 +66,7 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
                             ],
                           ),
                         ),
+                        // Center(child: CustomCard(holderName: "Rohaan", vaultId: "1212", expDate: "1212", cvv: "1212"),),
                         Center(
                           child: Obx(() {
                             if (userController.isLoading.value) {
