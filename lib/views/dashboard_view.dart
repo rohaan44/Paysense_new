@@ -4,21 +4,22 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:paysense/controllers/UserDataController.dart';
 import 'package:paysense/utils/images.dart';
-import 'package:paysense/widgets/CustomCard.dart';
 import 'package:paysense/widgets/round_button.dart';
 import 'package:paysense/widgets/tabbar.dart';
-import 'package:paysense/widgets/ui.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:paysense/widgets/ui.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class DashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final UserController userController = Get.put(UserController());
-final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    
     Future<void> _refreshScreen() async {
       await userController.fetchUserData();
     }
+
     return GetBuilder<UserController>(
       builder: (controller) => SafeArea(
         child: Scaffold(
@@ -66,14 +67,15 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
                             ],
                           ),
                         ),
-                        // Center(child: CustomCard(holderName: "Rohaan", vaultId: "1212", expDate: "1212", cvv: "1212"),),
+                        // Include your CustomCard here and check if it's affecting the fetch:
+                        
                         Center(
                           child: Obx(() {
                             if (userController.isLoading.value) {
                               return Center(
                                 child: LoadingAnimationWidget.staggeredDotsWave(
-                                   color: Colors.blue,
-                                size: 50,
+                                  color: Colors.blue,
+                                  size: 50,
                                 ),
                               );
                             } else if (userController.errorMessage.isNotEmpty) {
@@ -102,8 +104,7 @@ final isDarkMode = Theme.of(context).brightness == Brightness.dark;
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
-                                  const SizedBox(
-                                      height: 6), // Adjust spacing as needed
+                                  const SizedBox(height: 6), // Adjust spacing as needed
                                 ],
                               );
                             }

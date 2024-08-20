@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
             darkTheme: ThemeData.dark(),
             themeMode: ThemeMode.system,
             //initialRoute: RouteName.splashScreen,
-            home: Tester(),
+            home: SplashView(),
             getPages: AppRoutes.appRoutes()
             
             );

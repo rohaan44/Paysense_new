@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:paysense/widgets/CustomCard.dart';
 
@@ -7,13 +9,12 @@ class Tester extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: CustomCard()),
+        child: Scaffold(
+      body:  CustomCard(
+            buttonText: 'View', onPress: () { log("Rohaan"); },
+        
+          ),
         ),
-      ),
-    );
+      );
   }
 }
